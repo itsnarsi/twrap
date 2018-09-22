@@ -2,10 +2,9 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-19T12:17:21-05:00
+# @Last modified time: 2018-09-19T12:22:45-05:00
 
 import numpy as np
-
 import torch
 from torch import nn
 from torch.autograd import Variable
@@ -462,11 +461,9 @@ def ACTIVATIONS(name):
     elif name == 'softmax':
         return nn.Softmax()
     elif name == 'tanh':
-        return nn.Hardtanh(-1,1)
+        return nn.Hardtanh(-1, 1)
     elif name == 'sigm':
-        return nn.Hardtanh(0,1)
-    elif name == 'rbp':
-        return nn.ReLU(inplace=False)
+        return nn.Hardtanh(0, 1)
     elif name == 'linear':
         return linear()
     elif name == 'binthres':
