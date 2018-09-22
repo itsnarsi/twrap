@@ -2,9 +2,9 @@
 # @Date:   2018-09-19T11:54:03-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-22T17:27:21-05:00
+# @Last modified time: 2018-09-22T17:32:34-05:00
 from setuptools import setup
-
+from setuptools import find_packages
 setup(name='twrap',
       version='0.0.1',
       description='A pyTorch Wrapper.',
@@ -12,7 +12,7 @@ setup(name='twrap',
       author='Narsi Reddy',
       author_email='sainarsireddy@outlook.com',
       license='MIT',
-      packages=['twrap'],
+      packages=find_packages(),
       install_requires=['terminaltables',
-      'torch'],
+      'torch>=0.4.0'],
       zip_safe=False)
