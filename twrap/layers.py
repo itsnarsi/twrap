@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-19T12:22:45-05:00
+# @Last modified time: 2018-09-22T17:54:48-05:00
 
 import numpy as np
 import torch
@@ -222,7 +222,7 @@ class CONV2D_BLOCK(nn.Module):
     def __init__(self, kernel, in_ch, filters = [32], stride=1, padding='valid', activation='relu', use_bias=False,
                  dropout = 0.0, batch_norm = False, dilation = 1, groups = 1, conv_type = 1, scale = 4.0,
                  pool_type = 'max',pool_size = 2, pool_stride = 2, pool_padding = 'valid'):
-        super(CONV2D_BLOCK_V1, self).__init__()
+        super(CONV2D_BLOCK, self).__init__()
 
         # Inputs
         if isinstance(filters, list) is False:
