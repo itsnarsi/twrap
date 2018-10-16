@@ -1,8 +1,8 @@
 # @Author: Narsi Reddy <cibitaw1>
 # @Date:   2018-09-22T17:11:54-05:00
 # @Email:  sainarsireddy@outlook.com
-# @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-22T17:33:23-05:00
+# @Last modified by:   narsi
+# @Last modified time: 2018-10-15T22:59:13-05:00
 import os
 import torch
 
@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 """
 MODEL SUMMARY CODE
 """
-def model_summary(input_var, model):
+def model_summary(input_size, model):
     # Adopted from https://github.com/pytorch/pytorch/issues/2001#issuecomment-313735757
     def register_hook(module):
         def hook(module, input, output):
@@ -52,6 +52,7 @@ def model_summary(input_var, model):
            not (module == model):
             hooks.append(module.register_forward_hook(hook))
 
+    input_var = torch.randn(2, *input_size).type(torch.float32)
     # create properties
     summary = OrderedDict()
     hooks = []
@@ -186,6 +187,31 @@ def trainable_layer(layers):
     else:
         for param in layers.parameters():
             param.requires_grad = True
+
+def specifyLR(model, lr_layers, lr_layer_bias):
+    params = []
+    bias_keys = list(lr_layer_bias)
+    layer_keys = list(lr_layers)
+    for name, value in model.named_parameters():
+        if 'bias' in name:
+            c = True
+            for bk in bias_keys:
+                if bk in name:
+                    params += [{'params':value, 'lr': lr_layer_bias[bk][0], 'weight_decay': lr_layer_bias[bk][1]}]
+                    c = False
+            if c:
+                params += [{'params':value}]
+        else:
+            c = True
+            for lk in layer_keys:
+                if lk in name:
+                    params += [{'params':value, 'lr': lr_layer_bias[lk][0], 'weight_decay': lr_layer_bias[lk][1]}]
+                    c = False
+            if c:
+                params += [{'params':value}]
+    return params
+
+
 
 """
 MATCHING SCORE METRICS

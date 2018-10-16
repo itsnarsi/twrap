@@ -1,8 +1,8 @@
 # @Author: Narsi Reddy <cibitaw1>
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
-# @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-22T17:54:48-05:00
+# @Last modified by:   narsi
+# @Last modified time: 2018-10-15T22:31:55-05:00
 
 import numpy as np
 import torch
@@ -308,7 +308,7 @@ class resnet_module_type1(nn.Module):
 
     def forward(self, input):
         feat = self.layer(input)
-        if self.stride == 1:
+        if self.stride == 1 and self.input_filter == self.ouput_filters:
             feat = feat+input
         return feat
 
