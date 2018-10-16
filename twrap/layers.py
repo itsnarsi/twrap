@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2018-10-15T22:31:55-05:00
+# @Last modified time: 2018-10-16T01:31:07-05:00
 
 import numpy as np
 import torch
@@ -138,7 +138,7 @@ def conv2d_brick_3(in_ch, out_ch, kernel, stride, padding,
     brick = [] # Sequential layers list
 
     if type(dropout) is not list:
-        dropout = [dropout, dropout, dropout]
+        dropout = [dropout, dropout]
 
     brick += conv2d_brick_2(in_ch, int(out_ch/scale), kernel, stride, padding,
                    dilation, groups, bias, batch_norm, activation,
@@ -389,10 +389,12 @@ class RESNET_BLOCK(nn.Module):
         node = []
 
         # Convolutional module
-        for i in range(1, len(self.filters)):
-            node.append(self.resnet_module(self.kernel, input_filter = self.filters[i-1], ouput_filters = self.filters[i], activation=self.activation, dropout = self.dilation, use_bias = self.use_bias,
-                                                 stride = self.stride, padding = self.padding, dilation = self.dilation, groups = self.groups, scale = self.scale, batch_norm = self.batch_norm))
+        for i in range(1, len(self.filters) - 1):
+            node.append(self.resnet_module(self.kernel, input_filter = self.filters[i-1], ouput_filters = self.filters[i], activation=self.activation, dropout = self.dropout, use_bias = self.use_bias,
+                                                 stride = 1, padding = self.padding, dilation = self.dilation, groups = self.groups, scale = self.scale, batch_norm = self.batch_norm))
 
+        node.append(self.resnet_module(self.kernel, input_filter = self.filters[-2], ouput_filters = self.filters[-1], activation=self.activation, dropout = self.dropout, use_bias = self.use_bias,
+                                             stride = self.stride, padding = self.padding, dilation = self.dilation, groups = self.groups, scale = self.scale, batch_norm = self.batch_norm))
 
         if self.pool_type is not None:
             node += pooling_brick(self.pool_type, self.pool_size, self.pool_stride, self.pool_padding, False)
