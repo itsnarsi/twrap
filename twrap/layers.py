@@ -1,8 +1,8 @@
 # @Author: Narsi Reddy <cibitaw1>
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
-# @Last modified by:   narsi
-# @Last modified time: 2018-10-16T01:31:07-05:00
+# @Last modified by:   cibitaw1
+# @Last modified time: 2018-11-02T15:19:50-05:00
 
 import numpy as np
 import torch
@@ -447,6 +447,19 @@ class MLP_BLOCK(nn.Module):
 
     def forward(self, input):
         return self.layer(input)
+
+class norm_mlp_layer(nn.Module):
+    def __init__(self, input, output):
+        super(norm_mlp_layer, self).__init__()
+        self.input = input
+        self.output = output
+
+        self.layer = nn.utils.weight_norm(nn.Linear(input, output, bias=False))
+    def forward(self, input):
+        # input = nn.functional.normalize(input)
+        return self.layer(input)
+
+
 
 """
 ACTIVATION LAYERS
