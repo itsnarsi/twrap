@@ -1,14 +1,15 @@
 # @Author: Narsi Reddy <cibitaw1>
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
-# @Last modified by:   cibitaw1
-# @Last modified time: 2018-11-02T15:19:50-05:00
+# @Last modified by:   narsi
+# @Last modified time: 2018-11-14T20:01:29-06:00
 
 import numpy as np
 import torch
 from torch import nn
 from torch.autograd import Variable
 from torch.nn import Parameter
+import torch.nn.functional as F
 from torch.autograd import Function
 
 np.random.seed(29)
@@ -511,17 +512,7 @@ class L2_norm(nn.Module):
     def __init__(self):
         super(L2_norm, self).__init__()
     def forward(self, input):
-        return l2norm(input)
-
-def l2norm(input):
-        buffer = torch.pow(input, 2)
-
-        normp = torch.sum(buffer, 1, keepdim = True).add_(1e-6)
-        norm = torch.sqrt(normp)
-
-        _output = torch.div(input, norm)
-
-        return _output
+        return F.normalize(input)
 
 class linear(nn.Module):
     def __init__(self):
