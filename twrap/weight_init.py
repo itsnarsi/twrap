@@ -1,7 +1,7 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:06:36-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2018-11-12T20:26:19-06:00
+# @Last modified time: 2018-11-22T12:19:30-06:00
 import torch
 import torch.nn as nn
 import torch.nn.init as init
@@ -22,13 +22,13 @@ def weight_init(m):
         except:
             pass
     elif isinstance(m, nn.Conv2d):
-        init.xavier_normal(m.weight.data)
+        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
         try:
-            init.normal(m.bias.data)
+            init.constant(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.Conv3d):
-        init.xavier_normal(m.weight.data)
+        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
@@ -40,26 +40,26 @@ def weight_init(m):
         except:
             pass
     elif isinstance(m, nn.ConvTranspose2d):
-        init.xavier_normal(m.weight.data)
+        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
             pass
     elif isinstance(m, nn.ConvTranspose3d):
-        init.xavier_normal(m.weight.data)
+        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
             pass
     elif isinstance(m, nn.BatchNorm1d):
-        init.normal(m.weight.data, mean=1, std=0.02)
+        init.constant(m.weight.data, 1)
         try:
             init.constant(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.BatchNorm2d):
         try:
-            init.normal(m.weight.data, mean=1, std=0.02)
+            init.constant(m.weight.data, 1)
         except:
             pass
         try:
@@ -67,15 +67,15 @@ def weight_init(m):
         except:
             pass
     elif isinstance(m, nn.BatchNorm3d):
-        init.normal(m.weight.data, mean=1, std=0.02)
+        init.constant(m.weight.data, 1)
         try:
             init.constant(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.Linear):
-        init.xavier_normal(m.weight.data)
+        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
         try:
-            init.normal(m.bias.data)
+            init.constant(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.LSTM):

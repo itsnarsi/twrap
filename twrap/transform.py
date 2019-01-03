@@ -1,11 +1,21 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:19:49-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2018-11-21T23:28:59-06:00
+# @Last modified time: 2019-01-02T18:42:54-06:00
 
 import torch
 from PIL import Image
 import numpy as np
+
+class Tensor2PIL(object):
+
+    def __call__(self, I):
+
+        I = I.data.cpu().numpy().copy()
+        return Image.fromarray(I)
+
+    def __repr__(self):
+        return self.__class__.__name__ + '()'
 
 class ToZNorm(object):
     """Convert a ``PIL Image`` or ``numpy.ndarray`` to tensor.
