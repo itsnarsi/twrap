@@ -476,6 +476,8 @@ def ACTIVATIONS(name):
         return nn.SELU(inplace=False)
     elif name == 'softmax':
         return nn.Softmax()
+    elif name == 'softplus':
+        return nn.Softplus()
     elif name == 'tanh':
         return nn.Hardtanh(-1, 1)
     elif name == 'sigm':
