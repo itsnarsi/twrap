@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2018-11-22T23:24:26-06:00
+# @Last modified time: 2019-01-04T19:32:47-06:00
 
 import numpy as np
 import torch
@@ -206,13 +206,18 @@ def conv2d_brick_5(in_ch, out_ch, kernel, stride, padding,
     if type(dropout) is not list:
         dropout = [dropout, dropout]
 
+    if int(groups) > in_ch:
+        print('Groups must be multiples of input channels and less than input channels.')
+        print('Changing groups from ' + str(groups) + ' to ' + str(in_ch))
+        groups = in_ch
+
     brick += conv2d_brick_2(in_ch, int(out_ch/scale), kernel, stride, padding,
                    dilation, int(groups), bias, batch_norm, activation,
                    dropout[0], False)
 
     brick += conv2d_brick_2(int(out_ch/scale), out_ch, 1, 1, padding,
                    dilation, 1, bias, batch_norm, activation,
-                   dropout[0], False)
+                   dropout[1], False)
 
     if make_sequential is True:
         brick = nn.Sequential(*brick)
@@ -482,6 +487,8 @@ def ACTIVATIONS(name):
         return nn.Hardtanh(-1, 1)
     elif name == 'sigm':
         return nn.Hardtanh(0, 1)
+    elif name == 'sigmoid':
+        return nn.Sigmoid()
     elif name == 'linear':
         return linear()
     elif name == 'binthres':

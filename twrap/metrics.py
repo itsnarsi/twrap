@@ -1,11 +1,13 @@
 # @Author: Narsi Reddy <cibitaw1>
 # @Date:   2018-09-22T17:38:05-05:00
 # @Email:  sainarsireddy@outlook.com
-# @Last modified by:   cibitaw1
-# @Last modified time: 2018-09-22T17:50:51-05:00
+# @Last modified by:   narsi
+# @Last modified time: 2019-01-03T22:50:40-06:00
 import torch
+torch.manual_seed(29)
 from torch import nn
 import numpy as np
+np.random.seed(29)
 import torch.nn.functional as F
 from torch.autograd.function import Function
 from torch.nn.parameter import Parameter
