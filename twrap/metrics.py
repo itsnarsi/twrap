@@ -2,7 +2,7 @@
 # @Date:   2018-09-22T17:38:05-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-03T22:50:40-06:00
+# @Last modified time: 2019-01-27T13:05:11-06:00
 import torch
 torch.manual_seed(29)
 from torch import nn
@@ -16,6 +16,14 @@ from math import exp
 """
 CLASSIFICATION METRICS
 """
+
+def binary_accuracy(output, target):
+    """Computes the accuracy for multiple binary predictions"""
+    pred = output >= 0.5
+    truth = target >= 0.5
+    acc = pred.eq(truth).sum() / target.numel()
+    return acc
+
 def accuracy(output, target):
     batch_size = target.size(0)
 

@@ -1,7 +1,8 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:06:36-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2018-11-22T12:19:30-06:00
+# @Last modified time: 2019-01-27T20:55:47-06:00
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.init as init
@@ -22,13 +23,13 @@ def weight_init(m):
         except:
             pass
     elif isinstance(m, nn.Conv2d):
-        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
+        init.xavier_uniform_(m.weight.data , gain=np.sqrt(2))
         try:
-            init.constant(m.bias.data, 0)
+            init.constant_(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.Conv3d):
-        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
+        init.xavier_uniform_(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
@@ -40,42 +41,42 @@ def weight_init(m):
         except:
             pass
     elif isinstance(m, nn.ConvTranspose2d):
-        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
+        init.xavier_uniform_(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
             pass
     elif isinstance(m, nn.ConvTranspose3d):
-        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
+        init.xavier_uniform_(m.weight.data , gain=np.sqrt(2))
         try:
             init.normal(m.bias.data)
         except:
             pass
     elif isinstance(m, nn.BatchNorm1d):
-        init.constant(m.weight.data, 1)
+        init.constant_(m.weight.data, 1)
         try:
-            init.constant(m.bias.data, 0)
+            init.constant_(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.BatchNorm2d):
         try:
-            init.constant(m.weight.data, 1)
+            init.constant_(m.weight.data, 1)
         except:
             pass
         try:
-            init.constant(m.bias.data, 0)
+            init.constant_(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.BatchNorm3d):
-        init.constant(m.weight.data, 1)
+        init.constant_(m.weight.data, 1)
         try:
-            init.constant(m.bias.data, 0)
+            init.constant_(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.Linear):
-        init.xavier_uniform(m.weight.data , gain=np.sqrt(2))
+        init.xavier_uniform_(m.weight.data , gain=np.sqrt(2))
         try:
-            init.constant(m.bias.data, 0)
+            init.constant_(m.bias.data, 0)
         except:
             pass
     elif isinstance(m, nn.LSTM):

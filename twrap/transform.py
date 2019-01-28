@@ -1,7 +1,7 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:19:49-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-02T18:42:54-06:00
+# @Last modified time: 2019-01-11T20:47:40-06:00
 
 import torch
 from PIL import Image

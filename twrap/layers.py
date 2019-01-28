@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-04T19:32:47-06:00
+# @Last modified time: 2019-01-23T21:36:35-06:00
 
 import numpy as np
 import torch
@@ -170,7 +170,7 @@ def conv2d_brick_4(in_ch, out_ch, kernel, stride, padding,
     brick = [] # Sequential layers list
 
     if type(dropout) is not list:
-        dropout = [dropout, dropout, dropout]
+        dropout = [dropout, 0.0, 0.0]
 
     brick += conv2d_brick_2(in_ch, int(out_ch/scale), 1, 1, padding,
                    dilation, 1, bias, batch_norm, activation,
