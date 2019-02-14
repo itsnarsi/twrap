@@ -2,7 +2,7 @@
 # @Date:   2018-09-22T17:38:05-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-27T13:05:11-06:00
+# @Last modified time: 2019-02-13T22:46:56-06:00
 import torch
 torch.manual_seed(29)
 from torch import nn
@@ -17,12 +17,21 @@ from math import exp
 CLASSIFICATION METRICS
 """
 
-def binary_accuracy(output, target):
-    """Computes the accuracy for multiple binary predictions"""
-    pred = output >= 0.5
-    truth = target >= 0.5
-    acc = pred.eq(truth).sum() / target.numel()
-    return acc
+def accuracy_topk(output, target, topk=(1,)):
+    """Computes the accuracy over the k top predictions for the specified values of k"""
+    with torch.no_grad():
+        maxk = max(topk)
+        batch_size = target.size(0)
+
+        _, pred = output.topk(maxk, 1, True, True)
+        pred = pred.t()
+        correct = pred.eq(target.view(1, -1).expand_as(pred))
+
+        res = []
+        for k in topk:
+            correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
+            res.append(correct_k.mul_(100.0 / batch_size))
+        return res
 
 def accuracy(output, target):
     batch_size = target.size(0)
@@ -35,23 +44,12 @@ def accuracy(output, target):
     res = correct_k.mul_(100.0 / batch_size)
     return res
 
-def topK_accuray(k = 2):
-    def accuracy(output, target):
-        batch_size = target.size(0)
-
-        _, pred = output.topk(k, 1, True, True)
-        pred = pred.t()
-        correct = pred.eq(target.view(1, -1).expand_as(pred))
-
-        correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
-
-        return correct_k.mul_(100.0 / batch_size)
-    return accuracy
-
 def binary_accuracy(output, target):
 
     res = torch.mean(target.eq(torch.round(output)).float()) * 100
     return res
+
+
 
 """
 SUPER RESOLUTION
