@@ -1,7 +1,7 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:19:49-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-11T20:47:40-06:00
+# @Last modified time: 2019-02-16T01:02:29-06:00
 
 import torch
 from PIL import Image
@@ -35,6 +35,25 @@ class ToZNorm(object):
             I[..., 1] = (I[..., 1] - np.mean(I[..., 1]))/(np.std(I[..., 1])+0.0001)
             I[..., 2] = (I[..., 2] - np.mean(I[..., 2]))/(np.std(I[..., 2])+0.0001)
             I = np.transpose(I, (2, 0, 1))
+
+        I = torch.from_numpy(I.copy())
+        return I
+
+    def __repr__(self):
+        return self.__class__.__name__ + '()'
+
+class ToImg05Mean(object):
+
+    def __call__(self, I):
+
+        I = np.float32(I).copy()
+        I = I/255.0
+        if len(I.shape) == 2:
+            I = np.expand_dims(I, 0)
+        elif len(I.shape) == 3:
+            I = np.transpose(I, (2, 0, 1))
+
+        I = I - 0.5
 
         I = torch.from_numpy(I.copy())
         return I
