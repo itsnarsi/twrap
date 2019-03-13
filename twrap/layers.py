@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-01-23T21:36:35-06:00
+# @Last modified time: 2019-03-09T00:16:23-06:00
 
 import numpy as np
 import torch
@@ -571,9 +571,8 @@ class binTanH(torch.autograd.Function):
         """
         self.save_for_backward(input)
         c = input.clamp(min=-1, max =1)
-        c[c > 0.25] = 1
-        c[c > -0.25] = -1
-        c[( 1 * (c <= 0.25) * 1 * (c >= -0.25)) == 1] = 0
+        c[c > 0.0] = 1
+        c[c < 0.0] = -1
         return c
     @staticmethod
     def backward(self, grad_output):

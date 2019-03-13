@@ -2,7 +2,7 @@
 # @Date:   2018-09-22T17:11:54-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-02-17T19:18:22-06:00
+# @Last modified time: 2019-03-13T08:25:02-05:00
 import os
 import torch
 
@@ -298,8 +298,9 @@ def genROC(traget, score, resolution = 10000, gmrsat = [0.01, 0.001, 0.0001]):
     TAR = np.asarray(TAR)
     FAR = np.asarray(FAR)
 
-    EER = FAR[np.nanargmin(np.absolute(FAR-1+TAR))]
-    EER_thresh = thresholds[np.nanargmin(np.absolute(FAR-1+TAR))]
+    t_loc = np.nanargmin(np.abs(FAR - 1 + TAR))
+    EER = 0.5*(FAR[t_loc] + 1 - TAR[t_loc])
+    EER_thresh = thresholds[np.nanargmin(np.absolute(FAR-1+TAR))] # approximation for th
     AUC = auc(FAR, TAR)
 
 
