@@ -1,7 +1,7 @@
 # @Author: Narsi Reddy <narsi>
 # @Date:   2018-11-12T14:19:49-06:00
 # @Last modified by:   narsi
-# @Last modified time: 2019-06-02T12:30:12-05:00
+# @Last modified time: 2019-06-27T21:37:29-05:00
 
 import torch
 from PIL import Image, ImageFilter
@@ -95,6 +95,27 @@ class RandomBlur(object):
         scale = self.scale_diff * np.random.random_sample() + self.min
 
         return I.filter(ImageFilter.GaussianBlur(scale))
+
+    def __repr__(self):
+        return self.__class__.__name__ + '()'
+
+
+class RandomNoise(object):
+
+    def __init__(self, min_scale = 0.0, max_scale = 2):
+        self.min = min_scale
+        self.max = max_scale
+        self.scale_diff = max_scale - min_scale
+
+    def __call__(self, I):
+
+        scale = self.scale_diff * np.random.random_sample() + self.min
+
+        I = np.float32(I)/255.0
+        I = I + np.random.normal(0.0, scale/255, I.shape)
+        I = np.clip(I, 0, 1)
+        I = np.uint8(I * 255.0)
+        return Image.fromarray(I)
 
     def __repr__(self):
         return self.__class__.__name__ + '()'
