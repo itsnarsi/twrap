@@ -2,7 +2,7 @@
 # @Date:   2018-09-19T12:00:10-05:00
 # @Email:  sainarsireddy@outlook.com
 # @Last modified by:   narsi
-# @Last modified time: 2019-05-11T00:08:18-05:00
+# @Last modified time: 2019-08-24T19:15:36-05:00
 
 import numpy as np
 import torch
@@ -604,6 +604,13 @@ MISC FUNCTIONS
 
 def flatten(input):
     return input.view(input.size(0), -1)
+
+class Flatten(nn.Module):
+    def __init__(self):
+        super(Flatten, self).__init__()
+
+    def forward(self, x):
+        return flatten(x)
 
 class PWD_LAYER(nn.Module):
     #Pair Wise Destance 2D
